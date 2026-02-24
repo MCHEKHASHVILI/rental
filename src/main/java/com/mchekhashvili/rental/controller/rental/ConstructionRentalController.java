@@ -1,12 +1,14 @@
 package com.mchekhashvili.rental.controller.rental;
 
 import com.mchekhashvili.rental.dto.request.rental.ConstructionRentalRequest;
+import com.mchekhashvili.rental.dto.request.rental.RentalStatusUpdateRequest;
 import com.mchekhashvili.rental.dto.response.rental.ConstructionRentalResponse;
 import com.mchekhashvili.rental.model.rental.ConstructionRental;
 import com.mchekhashvili.rental.service.rental.ConstructionRentalService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -33,6 +35,12 @@ public class ConstructionRentalController extends AbstractRentalController<Const
     @PostMapping
     public ResponseEntity<ConstructionRentalResponse> store(@Valid @RequestBody ConstructionRentalRequest request) {
         return super.store(request);
+    }
+
+    @Override
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<ConstructionRentalResponse> updateStatus(@PathVariable Long id, @Valid @RequestBody RentalStatusUpdateRequest request) {
+        return super.updateStatus(id, request);
     }
 
     @Override

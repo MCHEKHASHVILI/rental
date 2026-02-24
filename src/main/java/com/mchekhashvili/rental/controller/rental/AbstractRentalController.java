@@ -1,11 +1,13 @@
 package com.mchekhashvili.rental.controller.rental;
 
+import com.mchekhashvili.rental.dto.request.rental.RentalStatusUpdateRequest;
 import com.mchekhashvili.rental.dto.response.BaseResponse;
 import com.mchekhashvili.rental.model.rental.Rental;
 import com.mchekhashvili.rental.service.rental.RentalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.net.URI;
 import java.util.List;
 
@@ -33,6 +35,11 @@ public abstract class AbstractRentalController<E extends Rental, RQ, RS extends 
                 .buildAndExpand(saved.getId())
                 .toUri();
         return ResponseEntity.created(location).body(saved);
+    }
+
+    @Override
+    public ResponseEntity<RS> updateStatus(Long id, RentalStatusUpdateRequest request) {
+        return ResponseEntity.ok(service.updateStatus(id, request));
     }
 
     @Override
