@@ -7,7 +7,12 @@ import com.mchekhashvili.rental.model.branch.Branch;
 import com.mchekhashvili.rental.repository.branch.BranchRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -18,6 +23,7 @@ public class BranchServiceImpl implements BranchService {
     private final BranchMapper mapper;
 
     @Override
+    @Cacheable(value = "branches")
     public List<BranchResponse> findAll() {
         return repository.findAllByActiveTrue()
                 .stream()
@@ -26,17 +32,21 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
+    @Cacheable(value = "branch", key = "#id")
     public BranchResponse findById(Long id) {
         return mapper.toResponse(findEntityById(id));
     }
 
     @Override
+    @CacheEvict(value = "branches", allEntries = true)
     public BranchResponse save(BranchRequest request) {
         Branch branch = mapper.toEntity(request);
         return mapper.toResponse(repository.save(branch));
     }
 
     @Override
+    @Caching(evict = @CacheEvict(value = "branches", allEntries = true),
+             put = @CachePut(value = "branch", key = "#id"))
     public BranchResponse update(Long id, BranchRequest request) {
         Branch existing = findEntityById(id);
         mapper.updateEntity(request, existing);
@@ -44,6 +54,10 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = "branches", allEntries = true),
+            @CacheEvict(value = "branch", key = "#id")
+    })
     public void delete(Long id) {
         Branch existing = findEntityById(id);
         existing.setActive(false);
