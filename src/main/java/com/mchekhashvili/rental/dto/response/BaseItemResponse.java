@@ -1,13 +1,13 @@
 package com.mchekhashvili.rental.dto.response;
 
-import com.mchekhashvili.rental.enums.RentalStatus;
+import com.mchekhashvili.rental.enums.ItemStatus;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class BaseResponse {
+public abstract class BaseItemResponse {
     private Long id;
     private Long branchId;
-    private RentalStatus status;
+    private ItemStatus status;
 }
