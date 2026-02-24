@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public abstract class BaseResponse extends BaseEntityResponse {
+    private Long branchId;
     private Long customerId;
     private Long rentalItemId;
     private RentalStatus status;
