@@ -6,7 +6,7 @@ import com.mchekhashvili.rental.mapper.payment.PaymentMapper;
 import com.mchekhashvili.rental.model.payment.Payment;
 import com.mchekhashvili.rental.model.rental.Rental;
 import com.mchekhashvili.rental.repository.payment.PaymentRepository;
-import com.mchekhashvili.rental.repository.rental.RentalRepository;
+import com.mchekhashvili.rental.repository.rental.BaseRentalRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,8 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
 
-    // Base rental repository typed to Rental (the abstract parent) for payment lookups
-    private final RentalRepository<Rental> rentalRepository;
+    private final BaseRentalRepository rentalRepository;
     private final PaymentRepository paymentRepository;
     private final PaymentMapper mapper;
 
