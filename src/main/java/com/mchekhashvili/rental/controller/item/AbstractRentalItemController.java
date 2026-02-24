@@ -1,16 +1,17 @@
 package com.mchekhashvili.rental.controller.item;
 
-import com.mchekhashvili.rental.dto.response.BaseResponse;
+import com.mchekhashvili.rental.dto.response.BaseItemResponse;
 import com.mchekhashvili.rental.model.item.RentalItem;
 import com.mchekhashvili.rental.service.item.RentalItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
-public abstract class AbstractRentalItemController<E extends RentalItem, RQ, RS extends BaseResponse> implements RentalItemController<RQ, RS> {
+public abstract class AbstractRentalItemController<E extends RentalItem, RQ, RS extends BaseItemResponse> implements RentalItemController<RQ, RS> {
 
     protected final RentalItemService<E, RQ, RS> service;
 

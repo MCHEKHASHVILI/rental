@@ -1,6 +1,7 @@
 package com.mchekhashvili.rental.controller.item;
 
 import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 public interface RentalItemController<RQ, RS> {
