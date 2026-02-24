@@ -1,6 +1,6 @@
 package com.mchekhashvili.rental.controller.customer;
 
-import com.mchekhashvili.rental.dto.response.BaseEntityResponse;
+import com.mchekhashvili.rental.dto.response.BaseResponse;
 import com.mchekhashvili.rental.model.customer.Customer;
 import com.mchekhashvili.rental.service.customer.CustomerService;
 import jakarta.validation.Valid;
@@ -13,7 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
-public abstract class AbstractCustomerController<E extends Customer, RQ, RS extends BaseEntityResponse>
+public abstract class AbstractCustomerController<E extends Customer, RQ, RS extends BaseResponse>
         implements CustomerController<RQ, RS> {
 
     protected final CustomerService<E, RQ, RS> service;

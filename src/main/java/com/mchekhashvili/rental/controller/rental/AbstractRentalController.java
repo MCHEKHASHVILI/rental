@@ -1,7 +1,7 @@
 package com.mchekhashvili.rental.controller.rental;
 
 import com.mchekhashvili.rental.dto.request.rental.RentalStatusUpdateRequest;
-import com.mchekhashvili.rental.dto.response.BaseResponse;
+import com.mchekhashvili.rental.dto.response.BaseRentalResponse;
 import com.mchekhashvili.rental.model.rental.Rental;
 import com.mchekhashvili.rental.service.rental.RentalService;
 import jakarta.validation.Valid;
@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RequiredArgsConstructor
-public abstract class AbstractRentalController<E extends Rental, RQ, RS extends BaseResponse>
+public abstract class AbstractRentalController<E extends Rental, RQ, RS extends BaseRentalResponse>
         implements RentalController<RQ, RS> {
 
     protected final RentalService<E, RQ, RS> service;
