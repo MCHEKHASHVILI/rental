@@ -1,6 +1,6 @@
 package com.mchekhashvili.rental.model.item;
 
-import com.mchekhashvili.rental.enums.RentalStatus;
+import com.mchekhashvili.rental.enums.ItemStatus;
 import com.mchekhashvili.rental.model.branch.Branch;
 import com.mchekhashvili.rental.model.rental.Rental;
 import jakarta.persistence.*;
@@ -25,7 +25,7 @@ public abstract class RentalItem {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private RentalStatus status = RentalStatus.AVAILABLE;
+    private ItemStatus status = ItemStatus.AVAILABLE;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id", nullable = false)
@@ -33,5 +33,4 @@ public abstract class RentalItem {
 
     @OneToMany(mappedBy = "rentalItem", cascade = CascadeType.ALL)
     private List<Rental> rentals = new ArrayList<>();
-
 }

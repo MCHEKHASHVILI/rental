@@ -51,6 +51,9 @@ public abstract class Rental {
     @Column(nullable = false)
     private BigDecimal monthlyFee;
 
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal lateFeePerDay = BigDecimal.ZERO;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RentalStatus status = RentalStatus.RENTED;
@@ -58,5 +61,4 @@ public abstract class Rental {
     @ToString.Exclude
     @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL)
     private List<RentalStatusHistory> statusHistory = new ArrayList<>();
-
 }
