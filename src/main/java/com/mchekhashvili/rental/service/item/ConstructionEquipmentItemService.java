@@ -14,9 +14,4 @@ public class ConstructionEquipmentItemService extends AbstractRentalItemService<
     public ConstructionEquipmentItemService(ConstructionEquipmentItemRepository repository, ConstructionEquipmentItemMapper mapper, BranchRepository branchRepository) {
         super(repository, mapper, branchRepository);
     }
-
-    @Override
-    protected Long getBranchId(ConstructionEquipmentItemRequest request) {
-        return request.getBranchId();
-    }
 }

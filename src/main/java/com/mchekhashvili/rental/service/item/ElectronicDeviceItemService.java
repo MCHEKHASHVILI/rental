@@ -14,9 +14,4 @@ public class ElectronicDeviceItemService extends AbstractRentalItemService<Elect
     public ElectronicDeviceItemService(ElectronicDeviceItemRepository repository, ElectronicDeviceItemMapper mapper, BranchRepository branchRepository) {
         super(repository, mapper, branchRepository);
     }
-
-    @Override
-    protected Long getBranchId(ElectronicDeviceItemRequest request) {
-        return request.getBranchId();
-    }
 }

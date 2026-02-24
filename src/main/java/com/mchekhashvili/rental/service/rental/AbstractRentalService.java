@@ -1,5 +1,6 @@
 package com.mchekhashvili.rental.service.rental;
 
+import com.mchekhashvili.rental.dto.request.rental.BaseRentalRequest;
 import com.mchekhashvili.rental.dto.request.rental.RentalStatusUpdateRequest;
 import com.mchekhashvili.rental.enums.ItemStatus;
 import com.mchekhashvili.rental.enums.RentalStatus;
@@ -21,7 +22,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
-public abstract class AbstractRentalService<E extends Rental, RQ, RS> implements RentalService<E, RQ, RS> {
+public abstract class AbstractRentalService<E extends Rental, RQ extends BaseRentalRequest, RS>
+        implements RentalService<E, RQ, RS> {
 
     protected final RentalRepository<E> repository;
     protected final RentalMapper<E, RQ, RS> mapper;
@@ -45,7 +47,7 @@ public abstract class AbstractRentalService<E extends Rental, RQ, RS> implements
 
     @Override
     public RS save(RQ request) {
-        Long itemId = getRentalItemId(request);
+        Long itemId = request.getRentalItemId();
         RentalItem item = rentalItemRepository.findById(itemId)
                 .orElseThrow(() -> new EntityNotFoundException("Item not found with id: " + itemId));
 
@@ -55,11 +57,11 @@ public abstract class AbstractRentalService<E extends Rental, RQ, RS> implements
             throw new IllegalStateException("Item is not available for rent, current status: " + item.getStatus());
         }
 
-        Long customerId = getCustomerId(request);
+        Long customerId = request.getCustomerId();
         Customer customer = customerRepository.findByIdAndActiveTrue(customerId)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + customerId));
 
-        Long branchId = getBranchId(request);
+        Long branchId = request.getBranchId();
         Branch branch = branchRepository.findByIdAndActiveTrue(branchId)
                 .orElseThrow(() -> new EntityNotFoundException("Branch not found with id: " + branchId));
 
@@ -139,8 +141,5 @@ public abstract class AbstractRentalService<E extends Rental, RQ, RS> implements
         statusHistoryRepository.save(history);
     }
 
-    protected abstract Long getRentalItemId(RQ request);
-    protected abstract Long getCustomerId(RQ request);
-    protected abstract Long getBranchId(RQ request);
     protected abstract void validateItemType(RentalItem item);
 }

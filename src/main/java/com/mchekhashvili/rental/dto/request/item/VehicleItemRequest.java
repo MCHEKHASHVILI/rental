@@ -1,17 +1,14 @@
 package com.mchekhashvili.rental.dto.request.item;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class VehicleItemRequest {
-
-    @NotNull(message = "Branch is required")
-    private Long branchId;
+public class VehicleItemRequest extends BaseItemRequest {
 
     @NotBlank(message = "Make is required")
     private String make;

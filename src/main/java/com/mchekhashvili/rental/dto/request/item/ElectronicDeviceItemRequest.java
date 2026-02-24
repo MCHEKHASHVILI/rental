@@ -8,10 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ElectronicDeviceItemRequest {
-
-    @NotNull(message = "Branch is required")
-    private Long branchId;
+public class ElectronicDeviceItemRequest extends BaseItemRequest {
 
     @NotNull(message = "Category is required")
     private DeviceCategory category;

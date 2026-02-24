@@ -27,21 +27,6 @@ public class VehicleRentalService extends AbstractRentalService<VehicleRental, V
     }
 
     @Override
-    protected Long getRentalItemId(VehicleRentalRequest request) {
-        return request.getRentalItemId();
-    }
-
-    @Override
-    protected Long getCustomerId(VehicleRentalRequest request) {
-        return request.getCustomerId();
-    }
-
-    @Override
-    protected Long getBranchId(VehicleRentalRequest request) {
-        return request.getBranchId();
-    }
-
-    @Override
     protected void validateItemType(RentalItem item) {
         if (!(item instanceof VehicleItem)) {
             throw new IllegalArgumentException("Item is not a vehicle");

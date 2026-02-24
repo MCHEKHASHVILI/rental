@@ -14,9 +14,4 @@ public class VehicleItemService extends AbstractRentalItemService<VehicleItem, V
     public VehicleItemService(VehicleItemRepository repository, VehicleItemMapper mapper, BranchRepository branchRepository) {
         super(repository, mapper, branchRepository);
     }
-
-    @Override
-    protected Long getBranchId(VehicleItemRequest request) {
-        return request.getBranchId();
-    }
 }

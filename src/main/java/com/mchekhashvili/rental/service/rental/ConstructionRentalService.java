@@ -27,21 +27,6 @@ public class ConstructionRentalService extends AbstractRentalService<Constructio
     }
 
     @Override
-    protected Long getRentalItemId(ConstructionRentalRequest request) {
-        return request.getRentalItemId();
-    }
-
-    @Override
-    protected Long getCustomerId(ConstructionRentalRequest request) {
-        return request.getCustomerId();
-    }
-
-    @Override
-    protected Long getBranchId(ConstructionRentalRequest request) {
-        return request.getBranchId();
-    }
-
-    @Override
     protected void validateItemType(RentalItem item) {
         if (!(item instanceof ConstructionEquipmentItem)) {
             throw new IllegalArgumentException("Item is not a construction equipment");

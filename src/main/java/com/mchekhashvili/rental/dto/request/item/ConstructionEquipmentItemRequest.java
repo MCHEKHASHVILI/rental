@@ -8,10 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ConstructionEquipmentItemRequest {
-
-    @NotNull(message = "Branch is required")
-    private Long branchId;
+public class ConstructionEquipmentItemRequest extends BaseItemRequest {
 
     @NotNull(message = "Equipment type is required")
     private EquipmentType equipmentType;

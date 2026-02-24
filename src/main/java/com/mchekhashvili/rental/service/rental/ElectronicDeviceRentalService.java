@@ -27,21 +27,6 @@ public class ElectronicDeviceRentalService extends AbstractRentalService<Electro
     }
 
     @Override
-    protected Long getRentalItemId(ElectronicDeviceRentalRequest request) {
-        return request.getRentalItemId();
-    }
-
-    @Override
-    protected Long getCustomerId(ElectronicDeviceRentalRequest request) {
-        return request.getCustomerId();
-    }
-
-    @Override
-    protected Long getBranchId(ElectronicDeviceRentalRequest request) {
-        return request.getBranchId();
-    }
-
-    @Override
     protected void validateItemType(RentalItem item) {
         if (!(item instanceof ElectronicDeviceItem)) {
             throw new IllegalArgumentException("Item is not an electronic device");

@@ -1,5 +1,6 @@
 package com.mchekhashvili.rental.service.item;
 
+import com.mchekhashvili.rental.dto.request.item.BaseItemRequest;
 import com.mchekhashvili.rental.enums.ItemStatus;
 import com.mchekhashvili.rental.mapper.item.RentalItemMapper;
 import com.mchekhashvili.rental.model.branch.Branch;
@@ -12,7 +13,8 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-public abstract class AbstractRentalItemService<E extends RentalItem, RQ, RS> implements RentalItemService<E, RQ, RS> {
+public abstract class AbstractRentalItemService<E extends RentalItem, RQ extends BaseItemRequest, RS>
+        implements RentalItemService<E, RQ, RS> {
 
     protected final RentalItemRepository<E> repository;
     protected final RentalItemMapper<E, RQ, RS> mapper;
@@ -33,7 +35,7 @@ public abstract class AbstractRentalItemService<E extends RentalItem, RQ, RS> im
 
     @Override
     public RS save(RQ request) {
-        Long branchId = getBranchId(request);
+        Long branchId = request.getBranchId();
         Branch branch = branchRepository.findByIdAndActiveTrue(branchId)
                 .orElseThrow(() -> new EntityNotFoundException("Branch not found with id: " + branchId));
         E entity = mapper.toEntity(request);
@@ -62,6 +64,4 @@ public abstract class AbstractRentalItemService<E extends RentalItem, RQ, RS> im
         return repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Item not found with id: " + id));
     }
-
-    protected abstract Long getBranchId(RQ request);
 }
