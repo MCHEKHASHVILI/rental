@@ -10,8 +10,8 @@ import com.mchekhashvili.rental.model.item.RentalItem;
 import com.mchekhashvili.rental.model.rental.Rental;
 import com.mchekhashvili.rental.model.rental.RentalStatusHistory;
 import com.mchekhashvili.rental.repository.branch.BranchRepository;
-import com.mchekhashvili.rental.repository.customer.CustomerRepository;
-import com.mchekhashvili.rental.repository.item.RentalItemRepository;
+import com.mchekhashvili.rental.repository.customer.BaseCustomerRepository;
+import com.mchekhashvili.rental.repository.item.BaseRentalItemRepository;
 import com.mchekhashvili.rental.repository.rental.RentalRepository;
 import com.mchekhashvili.rental.repository.rental.RentalStatusHistoryRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,8 +25,8 @@ public abstract class AbstractRentalService<E extends Rental, RQ, RS> implements
 
     protected final RentalRepository<E> repository;
     protected final RentalMapper<E, RQ, RS> mapper;
-    protected final RentalItemRepository<RentalItem> rentalItemRepository;
-    protected final CustomerRepository<Customer> customerRepository;
+    protected final BaseRentalItemRepository rentalItemRepository;
+    protected final BaseCustomerRepository customerRepository;
     protected final BranchRepository branchRepository;
     protected final RentalStatusHistoryRepository statusHistoryRepository;
 
@@ -56,7 +56,7 @@ public abstract class AbstractRentalService<E extends Rental, RQ, RS> implements
         }
 
         Long customerId = getCustomerId(request);
-        Customer customer = customerRepository.findById(customerId)
+        Customer customer = customerRepository.findByIdAndActiveTrue(customerId)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + customerId));
 
         Long branchId = getBranchId(request);
@@ -92,7 +92,6 @@ public abstract class AbstractRentalService<E extends Rental, RQ, RS> implements
 
         rental.setStatus(target);
 
-        // Update item status to reflect reality
         RentalItem item = rental.getRentalItem();
         if (target == RentalStatus.RETURNED) {
             item.setStatus(ItemStatus.AVAILABLE);
