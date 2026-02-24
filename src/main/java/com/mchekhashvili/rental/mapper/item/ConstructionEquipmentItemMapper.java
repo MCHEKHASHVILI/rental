@@ -5,6 +5,7 @@ import com.mchekhashvili.rental.dto.response.item.ConstructionEquipmentItemRespo
 import com.mchekhashvili.rental.model.item.ConstructionEquipmentItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface ConstructionEquipmentItemMapper extends RentalItemMapper<ConstructionEquipmentItem, ConstructionEquipmentItemRequest, ConstructionEquipmentItemResponse> {
@@ -13,10 +14,17 @@ public interface ConstructionEquipmentItemMapper extends RentalItemMapper<Constr
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "rentals", ignore = true)
-    @Mapping(target = "branch.id", source = "branchId")
+    @Mapping(target = "branch", ignore = true)
     ConstructionEquipmentItem toEntity(ConstructionEquipmentItemRequest request);
 
     @Override
     @Mapping(target = "branchId", source = "branch.id")
     ConstructionEquipmentItemResponse toResponse(ConstructionEquipmentItem entity);
+
+    @Override
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "rentals", ignore = true)
+    @Mapping(target = "branch", ignore = true)
+    void updateEntity(ConstructionEquipmentItemRequest request, @MappingTarget ConstructionEquipmentItem entity);
 }
