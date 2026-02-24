@@ -1,7 +1,7 @@
 package com.mchekhashvili.rental.model.rental;
 
 import com.mchekhashvili.rental.enums.RentalStatus;
-import com.mchekhashvili.rental.model.Branch;
+import com.mchekhashvili.rental.model.branch.Branch;
 import com.mchekhashvili.rental.model.customer.Customer;
 import com.mchekhashvili.rental.model.item.RentalItem;
 import jakarta.persistence.*;
@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

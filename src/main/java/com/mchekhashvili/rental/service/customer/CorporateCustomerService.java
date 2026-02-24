@@ -5,12 +5,21 @@ import com.mchekhashvili.rental.dto.response.customer.CorporateCustomerResponse;
 import com.mchekhashvili.rental.mapper.customer.CorporateCustomerMapper;
 import com.mchekhashvili.rental.model.customer.CorporateCustomer;
 import com.mchekhashvili.rental.repository.customer.CorporateCustomerRepository;
+import com.mchekhashvili.rental.repository.customer.IdentificationDocumentRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CorporateCustomerService extends AbstractCustomerService<CorporateCustomer, CorporateCustomerRequest, CorporateCustomerResponse> {
 
-    public CorporateCustomerService(CorporateCustomerRepository repository, CorporateCustomerMapper mapper) {
-        super(repository, mapper);
+    public CorporateCustomerService(
+            CorporateCustomerRepository repository,
+            CorporateCustomerMapper mapper,
+            IdentificationDocumentRepository identificationDocumentRepository) {
+        super(repository, mapper, identificationDocumentRepository);
+    }
+
+    @Override
+    protected Long getIdentificationDocumentId(CorporateCustomerRequest request) {
+        return request.getIdentificationDocumentId();
     }
 }

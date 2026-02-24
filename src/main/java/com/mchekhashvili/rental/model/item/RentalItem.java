@@ -1,7 +1,7 @@
 package com.mchekhashvili.rental.model.item;
 
 import com.mchekhashvili.rental.enums.RentalStatus;
-import com.mchekhashvili.rental.model.Branch;
+import com.mchekhashvili.rental.model.branch.Branch;
 import com.mchekhashvili.rental.model.rental.Rental;
 import jakarta.persistence.*;
 import lombok.Getter;

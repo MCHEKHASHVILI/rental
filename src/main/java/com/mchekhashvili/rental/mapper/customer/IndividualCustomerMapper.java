@@ -13,7 +13,7 @@ public interface IndividualCustomerMapper extends CustomerMapper<IndividualCusto
     @Override
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "active", ignore = true)
-    @Mapping(target = "identificationDocument.id", source = "identificationDocumentId")
+    @Mapping(target = "identificationDocument", ignore = true)
     IndividualCustomer toEntity(IndividualCustomerRequest request);
 
     @Override
@@ -23,6 +23,6 @@ public interface IndividualCustomerMapper extends CustomerMapper<IndividualCusto
     @Override
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "active", ignore = true)
-    @Mapping(target = "identificationDocument.id", source = "identificationDocumentId")
+    @Mapping(target = "identificationDocument", ignore = true)
     void updateEntity(IndividualCustomerRequest request, @MappingTarget IndividualCustomer entity);
 }

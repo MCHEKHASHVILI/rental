@@ -2,7 +2,9 @@ package com.mchekhashvili.rental.service.customer;
 
 import com.mchekhashvili.rental.mapper.customer.CustomerMapper;
 import com.mchekhashvili.rental.model.customer.Customer;
+import com.mchekhashvili.rental.model.customer.document.IdentificationDocument;
 import com.mchekhashvili.rental.repository.customer.CustomerRepository;
+import com.mchekhashvili.rental.repository.customer.IdentificationDocumentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import java.util.List;
@@ -12,6 +14,7 @@ public abstract class AbstractCustomerService<E extends Customer, RQ, RS> implem
 
     protected final CustomerRepository<E> repository;
     protected final CustomerMapper<E, RQ, RS> mapper;
+    protected final IdentificationDocumentRepository identificationDocumentRepository;
 
     @Override
     public List<RS> findAll() {
@@ -29,6 +32,10 @@ public abstract class AbstractCustomerService<E extends Customer, RQ, RS> implem
     @Override
     public RS save(RQ request) {
         E entity = mapper.toEntity(request);
+        IdentificationDocument document = identificationDocumentRepository
+                .findById(getIdentificationDocumentId(request))
+                .orElseThrow(() -> new EntityNotFoundException("Identification document not found"));
+        entity.setIdentificationDocument(document);
         return mapper.toResponse(repository.save(entity));
     }
 
@@ -36,6 +43,10 @@ public abstract class AbstractCustomerService<E extends Customer, RQ, RS> implem
     public RS update(Long id, RQ request) {
         E existing = findEntityById(id);
         mapper.updateEntity(request, existing);
+        IdentificationDocument document = identificationDocumentRepository
+                .findById(getIdentificationDocumentId(request))
+                .orElseThrow(() -> new EntityNotFoundException("Identification document not found"));
+        existing.setIdentificationDocument(document);
         return mapper.toResponse(repository.save(existing));
     }
 
@@ -50,4 +61,6 @@ public abstract class AbstractCustomerService<E extends Customer, RQ, RS> implem
         return repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + id));
     }
+
+    protected abstract Long getIdentificationDocumentId(RQ request);
 }
