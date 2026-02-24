@@ -32,7 +32,7 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public List<BranchResponse> findAllDeleted() {
+    public List<BranchResponse> findAllInactive() {
         return repository.findAllByActiveFalse()
                 .stream()
                 .map(mapper::toResponse)
@@ -42,7 +42,7 @@ public class BranchServiceImpl implements BranchService {
     @Override
     @Cacheable(value = "branch", key = "#id")
     public BranchResponse findById(Long id) {
-        return mapper.toResponse(findActiveEntityById(id));
+        return mapper.toResponse(findActiveById(id));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class BranchServiceImpl implements BranchService {
     @Caching(evict = @CacheEvict(value = "branches", allEntries = true),
              put = @CachePut(value = "branch", key = "#id"))
     public BranchResponse update(Long id, BranchRequest request) {
-        Branch existing = findActiveEntityById(id);
+        Branch existing = findActiveById(id);
         mapper.updateEntity(request, existing);
         return mapper.toResponse(repository.save(existing));
     }
@@ -67,7 +67,7 @@ public class BranchServiceImpl implements BranchService {
             @CacheEvict(value = "branch", key = "#id")
     })
     public void delete(Long id) {
-        Branch existing = findActiveEntityById(id);
+        Branch existing = findActiveById(id);
         existing.setActive(false);
         repository.save(existing);
     }
@@ -77,12 +77,12 @@ public class BranchServiceImpl implements BranchService {
              put = @CachePut(value = "branch", key = "#id"))
     public BranchResponse restore(Long id) {
         Branch existing = repository.findByIdAndActiveFalse(id)
-                .orElseThrow(() -> new EntityNotFoundException("Deleted branch not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Inactive branch not found with id: " + id));
         existing.setActive(true);
         return mapper.toResponse(repository.save(existing));
     }
 
-    private Branch findActiveEntityById(Long id) {
+    private Branch findActiveById(Long id) {
         return repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Branch not found with id: " + id));
     }

@@ -22,9 +22,8 @@ public abstract class AbstractRentalItemService<E extends RentalItem, RQ extends
 
     @Override
     public List<RS> findAll() {
-        return repository.findAll()
+        return repository.findAllByStatusNot(ItemStatus.LOST)
                 .stream()
-                .filter(item -> item.getStatus() != ItemStatus.LOST)
                 .map(mapper::toResponse)
                 .toList();
     }
@@ -72,8 +71,8 @@ public abstract class AbstractRentalItemService<E extends RentalItem, RQ extends
     @Override
     public RS restore(Long id) {
         E item = findEntityById(id);
-        if (!item.getStatus().canTransitionTo(ItemStatus.AVAILABLE)) {
-            throw new IllegalStateException("Item with status " + item.getStatus() + " cannot be restored to AVAILABLE");
+        if (item.getStatus() != ItemStatus.LOST) {
+            throw new IllegalStateException("Only LOST items can be restored, current status: " + item.getStatus());
         }
         item.setStatus(ItemStatus.AVAILABLE);
         return mapper.toResponse(repository.save(item));

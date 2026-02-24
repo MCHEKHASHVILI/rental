@@ -25,9 +25,9 @@ public abstract class AbstractCustomerController<E extends Customer, RQ, RS exte
     }
 
     @Override
-    @GetMapping("/deleted")
-    public ResponseEntity<List<RS>> deleted() {
-        return ResponseEntity.ok(service.findAllDeleted());
+    @GetMapping("/inactive")
+    public ResponseEntity<List<RS>> inactive() {
+        return ResponseEntity.ok(service.findAllInactive());
     }
 
     @Override

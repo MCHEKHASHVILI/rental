@@ -9,5 +9,6 @@ import java.util.List;
 
 @NoRepositoryBean
 public interface RentalItemRepository<T extends RentalItem> extends JpaRepository<T, Long> {
+    List<T> findAllByStatusNot(ItemStatus status);
     List<T> findAllByStatus(ItemStatus status);
 }

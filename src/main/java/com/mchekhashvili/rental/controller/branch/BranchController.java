@@ -24,9 +24,9 @@ public class BranchController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping("/deleted")
-    public ResponseEntity<List<BranchResponse>> deleted() {
-        return ResponseEntity.ok(service.findAllDeleted());
+    @GetMapping("/inactive")
+    public ResponseEntity<List<BranchResponse>> inactive() {
+        return ResponseEntity.ok(service.findAllInactive());
     }
 
     @GetMapping("/{id}")

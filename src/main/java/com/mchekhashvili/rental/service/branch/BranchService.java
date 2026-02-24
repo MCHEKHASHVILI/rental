@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface BranchService {
     List<BranchResponse> findAll();
-    List<BranchResponse> findAllDeleted();
+    List<BranchResponse> findAllInactive();
     BranchResponse findById(Long id);
     BranchResponse save(BranchRequest request);
     BranchResponse update(Long id, BranchRequest request);

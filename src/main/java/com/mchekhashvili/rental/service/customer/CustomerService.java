@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CustomerService<E extends Customer, RQ, RS> {
     List<RS> findAll();
-    List<RS> findAllDeleted();
+    List<RS> findAllInactive();
     RS findById(Long id);
     RS save(RQ request);
     RS update(Long id, RQ request);

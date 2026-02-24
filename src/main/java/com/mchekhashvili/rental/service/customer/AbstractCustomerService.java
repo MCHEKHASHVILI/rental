@@ -26,7 +26,7 @@ public abstract class AbstractCustomerService<E extends Customer, RQ, RS> implem
     }
 
     @Override
-    public List<RS> findAllDeleted() {
+    public List<RS> findAllInactive() {
         return repository.findAllByActiveFalse()
                 .stream()
                 .map(mapper::toResponse)
@@ -35,7 +35,7 @@ public abstract class AbstractCustomerService<E extends Customer, RQ, RS> implem
 
     @Override
     public RS findById(Long id) {
-        return mapper.toResponse(findActiveEntityById(id));
+        return mapper.toResponse(findActiveById(id));
     }
 
     @Override
@@ -50,7 +50,7 @@ public abstract class AbstractCustomerService<E extends Customer, RQ, RS> implem
 
     @Override
     public RS update(Long id, RQ request) {
-        E existing = findActiveEntityById(id);
+        E existing = findActiveById(id);
         mapper.updateEntity(request, existing);
         IdentificationDocument document = identificationDocumentRepository
                 .findById(getIdentificationDocumentId(request))
@@ -61,7 +61,7 @@ public abstract class AbstractCustomerService<E extends Customer, RQ, RS> implem
 
     @Override
     public void delete(Long id) {
-        E existing = findActiveEntityById(id);
+        E existing = findActiveById(id);
         existing.setActive(false);
         repository.save(existing);
     }
@@ -69,12 +69,12 @@ public abstract class AbstractCustomerService<E extends Customer, RQ, RS> implem
     @Override
     public RS restore(Long id) {
         E existing = repository.findByIdAndActiveFalse(id)
-                .orElseThrow(() -> new EntityNotFoundException("Deleted customer not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Inactive customer not found with id: " + id));
         existing.setActive(true);
         return mapper.toResponse(repository.save(existing));
     }
 
-    protected E findActiveEntityById(Long id) {
+    protected E findActiveById(Long id) {
         return repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Customer not found with id: " + id));
     }
