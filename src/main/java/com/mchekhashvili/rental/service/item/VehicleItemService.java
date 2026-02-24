@@ -19,9 +19,4 @@ public class VehicleItemService extends AbstractRentalItemService<VehicleItem, V
     protected Long getBranchId(VehicleItemRequest request) {
         return request.getBranchId();
     }
-
-    @Override
-    protected void updateFields(VehicleItem existing, VehicleItemRequest request) {
-        mapper.updateEntity(request, existing);
-    }
 }

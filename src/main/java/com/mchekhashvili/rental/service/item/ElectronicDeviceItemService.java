@@ -19,9 +19,4 @@ public class ElectronicDeviceItemService extends AbstractRentalItemService<Elect
     protected Long getBranchId(ElectronicDeviceItemRequest request) {
         return request.getBranchId();
     }
-
-    @Override
-    protected void updateFields(ElectronicDeviceItem existing, ElectronicDeviceItemRequest request) {
-        mapper.updateEntity(request, existing);
-    }
 }

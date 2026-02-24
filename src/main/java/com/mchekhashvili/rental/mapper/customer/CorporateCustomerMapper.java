@@ -14,6 +14,7 @@ public interface CorporateCustomerMapper extends CustomerMapper<CorporateCustome
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "active", ignore = true)
     @Mapping(target = "identificationDocument", ignore = true)
+    @Mapping(target = "rentals", ignore = true)
     CorporateCustomer toEntity(CorporateCustomerRequest request);
 
     @Override
@@ -24,5 +25,6 @@ public interface CorporateCustomerMapper extends CustomerMapper<CorporateCustome
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "active", ignore = true)
     @Mapping(target = "identificationDocument", ignore = true)
+    @Mapping(target = "rentals", ignore = true)
     void updateEntity(CorporateCustomerRequest request, @MappingTarget CorporateCustomer entity);
 }

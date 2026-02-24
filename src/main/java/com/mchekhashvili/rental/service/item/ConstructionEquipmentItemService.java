@@ -19,9 +19,4 @@ public class ConstructionEquipmentItemService extends AbstractRentalItemService<
     protected Long getBranchId(ConstructionEquipmentItemRequest request) {
         return request.getBranchId();
     }
-
-    @Override
-    protected void updateFields(ConstructionEquipmentItem existing, ConstructionEquipmentItemRequest request) {
-        mapper.updateEntity(request, existing);
-    }
 }

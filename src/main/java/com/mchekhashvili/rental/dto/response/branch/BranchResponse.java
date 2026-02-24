@@ -1,12 +1,12 @@
 package com.mchekhashvili.rental.dto.response.branch;
 
-import com.mchekhashvili.rental.dto.response.BaseResponse;
+import com.mchekhashvili.rental.dto.response.BaseEntityResponse;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class BranchResponse extends BaseResponse {
+public class BranchResponse extends BaseEntityResponse {
     private String name;
     private String address;
     private String email;

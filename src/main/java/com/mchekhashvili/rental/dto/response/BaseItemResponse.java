@@ -4,10 +4,12 @@ import com.mchekhashvili.rental.enums.ItemStatus;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Base for rental item response DTOs — carries id, branchId, and item availability status.
+ */
 @Getter
 @Setter
-public abstract class BaseItemResponse {
-    private Long id;
+public abstract class BaseItemResponse extends BaseEntityResponse {
     private Long branchId;
     private ItemStatus status;
 }

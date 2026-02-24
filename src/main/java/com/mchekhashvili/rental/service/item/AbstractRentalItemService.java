@@ -64,5 +64,4 @@ public abstract class AbstractRentalItemService<E extends RentalItem, RQ, RS> im
     }
 
     protected abstract Long getBranchId(RQ request);
-    protected abstract void updateFields(E existing, RQ request);
 }
