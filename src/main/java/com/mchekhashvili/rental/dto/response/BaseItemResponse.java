@@ -9,7 +9,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public abstract class BaseItemResponse extends BaseEntityResponse {
+public abstract class BaseItemResponse extends BaseResponse {
     private Long branchId;
     private ItemStatus status;
 }

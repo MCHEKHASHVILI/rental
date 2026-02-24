@@ -1,6 +1,6 @@
 package com.mchekhashvili.rental.dto.response.customer;
 
-import com.mchekhashvili.rental.dto.response.BaseEntityResponse;
+import com.mchekhashvili.rental.dto.response.BaseResponse;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +10,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public abstract class BaseCustomerResponse extends BaseEntityResponse {
+public abstract class BaseCustomerResponse extends BaseResponse {
     private String email;
     private String phone;
     private String address;
