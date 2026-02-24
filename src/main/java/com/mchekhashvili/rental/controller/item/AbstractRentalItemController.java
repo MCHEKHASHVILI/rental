@@ -25,6 +25,12 @@ public abstract class AbstractRentalItemController<E extends RentalItem, RQ, RS 
     }
 
     @Override
+    @GetMapping("/lost")
+    public ResponseEntity<List<RS>> lost() {
+        return ResponseEntity.ok(service.findAllLost());
+    }
+
+    @Override
     @GetMapping("/{id}")
     public ResponseEntity<RS> show(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
@@ -53,5 +59,11 @@ public abstract class AbstractRentalItemController<E extends RentalItem, RQ, RS 
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    @PatchMapping("/{id}/restore")
+    public ResponseEntity<RS> restore(@PathVariable Long id) {
+        return ResponseEntity.ok(service.restore(id));
     }
 }

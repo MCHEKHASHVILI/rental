@@ -22,7 +22,7 @@ public enum ItemStatus {
         AVAILABLE.allowedTransitions = Set.of(RENTED);
         RENTED.allowedTransitions = Set.of(AVAILABLE, DAMAGED, LOST);
         DAMAGED.allowedTransitions = Set.of(LOST);
-        LOST.allowedTransitions = Set.of();
+        LOST.allowedTransitions = Set.of(AVAILABLE);
     }
 
     public boolean canTransitionTo(ItemStatus newStatus) {

@@ -24,6 +24,11 @@ public class BranchController {
         return ResponseEntity.ok(service.findAll());
     }
 
+    @GetMapping("/deleted")
+    public ResponseEntity<List<BranchResponse>> deleted() {
+        return ResponseEntity.ok(service.findAllDeleted());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<BranchResponse> show(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
@@ -49,5 +54,10 @@ public class BranchController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/restore")
+    public ResponseEntity<BranchResponse> restore(@PathVariable Long id) {
+        return ResponseEntity.ok(service.restore(id));
     }
 }
