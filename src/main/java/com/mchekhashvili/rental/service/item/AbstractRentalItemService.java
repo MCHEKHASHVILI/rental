@@ -1,8 +1,10 @@
 package com.mchekhashvili.rental.service.item;
 
-import com.mchekhashvili.rental.enums.RentalStatus;
+import com.mchekhashvili.rental.enums.ItemStatus;
 import com.mchekhashvili.rental.mapper.item.RentalItemMapper;
+import com.mchekhashvili.rental.model.branch.Branch;
 import com.mchekhashvili.rental.model.item.RentalItem;
+import com.mchekhashvili.rental.repository.branch.BranchRepository;
 import com.mchekhashvili.rental.repository.item.RentalItemRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ public abstract class AbstractRentalItemService<E extends RentalItem, RQ, RS> im
 
     protected final RentalItemRepository<E> repository;
     protected final RentalItemMapper<E, RQ, RS> mapper;
+    protected final BranchRepository branchRepository;
 
     @Override
     public List<RS> findAll() {
@@ -30,21 +33,28 @@ public abstract class AbstractRentalItemService<E extends RentalItem, RQ, RS> im
 
     @Override
     public RS save(RQ request) {
+        Long branchId = getBranchId(request);
+        Branch branch = branchRepository.findByIdAndActiveTrue(branchId)
+                .orElseThrow(() -> new EntityNotFoundException("Branch not found with id: " + branchId));
         E entity = mapper.toEntity(request);
+        entity.setBranch(branch);
         return mapper.toResponse(repository.save(entity));
     }
 
     @Override
     public RS update(Long id, RQ request) {
         E existing = findEntityById(id);
-        updateFields(existing, request);
+        mapper.updateEntity(request, existing);
         return mapper.toResponse(repository.save(existing));
     }
 
     @Override
     public void delete(Long id) {
         E item = findEntityById(id);
-        item.setStatus(RentalStatus.LOST);
+        if (!item.getStatus().canTransitionTo(ItemStatus.LOST)) {
+            throw new IllegalStateException("Item with status " + item.getStatus() + " cannot be marked as LOST");
+        }
+        item.setStatus(ItemStatus.LOST);
         repository.save(item);
     }
 
@@ -53,5 +63,6 @@ public abstract class AbstractRentalItemService<E extends RentalItem, RQ, RS> im
                 .orElseThrow(() -> new EntityNotFoundException("Item not found with id: " + id));
     }
 
+    protected abstract Long getBranchId(RQ request);
     protected abstract void updateFields(E existing, RQ request);
 }
