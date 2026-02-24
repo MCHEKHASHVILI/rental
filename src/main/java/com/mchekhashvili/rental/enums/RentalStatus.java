@@ -3,13 +3,13 @@ package com.mchekhashvili.rental.enums;
 import lombok.Getter;
 
 import java.util.Set;
+
 @Getter
 public enum RentalStatus {
-    AVAILABLE("Item is available for rent"),
-    RENTED("Item is currently rented"),
+    RENTED("Rental is active"),
     RETURNED("Item has been returned"),
-    DAMAGED("Item has been damaged"),
-    LOST("Item has been lost");
+    DAMAGED("Item has been damaged during rental"),
+    LOST("Item has been lost during rental");
 
     private final String description;
     private Set<RentalStatus> allowedTransitions;
@@ -19,7 +19,6 @@ public enum RentalStatus {
     }
 
     static {
-        AVAILABLE.allowedTransitions = Set.of(RENTED);
         RENTED.allowedTransitions = Set.of(RETURNED, DAMAGED, LOST);
         RETURNED.allowedTransitions = Set.of();
         DAMAGED.allowedTransitions = Set.of(RETURNED, LOST);
@@ -28,5 +27,9 @@ public enum RentalStatus {
 
     public boolean canTransitionTo(RentalStatus newStatus) {
         return allowedTransitions.contains(newStatus);
+    }
+
+    public boolean isClosed() {
+        return this == RETURNED || this == LOST;
     }
 }
