@@ -5,12 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Base for rental response DTOs — carries the fields common to every rental:
- * id, branchId, and the current rental lifecycle status.
+ * Base for rental response DTOs — carries the rental lifecycle status.
+ * id and branchId are inherited from BaseEntityResponse.
  */
 @Getter
 @Setter
 public abstract class BaseResponse extends BaseEntityResponse {
-    private Long branchId;
     private RentalStatus status;
 }
