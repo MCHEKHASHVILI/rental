@@ -10,6 +10,7 @@ import com.mchekhashvili.rental.model.rental.VehicleRental;
 import com.mchekhashvili.rental.repository.branch.BranchRepository;
 import com.mchekhashvili.rental.repository.customer.CustomerRepository;
 import com.mchekhashvili.rental.repository.item.RentalItemRepository;
+import com.mchekhashvili.rental.repository.rental.RentalStatusHistoryRepository;
 import com.mchekhashvili.rental.repository.rental.VehicleRentalRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +22,9 @@ public class VehicleRentalService extends AbstractRentalService<VehicleRental, V
             VehicleRentalMapper mapper,
             RentalItemRepository<RentalItem> rentalItemRepository,
             CustomerRepository<Customer> customerRepository,
-            BranchRepository branchRepository) {
-        super(repository, mapper, rentalItemRepository, customerRepository, branchRepository);
+            BranchRepository branchRepository,
+            RentalStatusHistoryRepository statusHistoryRepository) {
+        super(repository, mapper, rentalItemRepository, customerRepository, branchRepository, statusHistoryRepository);
     }
 
     @Override
